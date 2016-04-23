@@ -1,6 +1,8 @@
 package bezier.gui;
 import java.awt.BasicStroke;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -72,8 +74,23 @@ public class Editor extends JPanel {
     
     bezier.render(graphics);
     
+    Font font = graphics.getFont().deriveFont(Font.BOLD);
+    graphics.setFont(font);
+    
+    FontMetrics metrics = graphics.getFontMetrics();
+    renderString(graphics, metrics, "LMB - Place/Move control points", 0);
+    renderString(graphics, metrics, "RMB - Remove control points", 1);
+    renderString(graphics, metrics, "MMB - Pan the editor surface", 2);
+    
     graphics.translate(-(int)viewportOffset.getX(), -(int)viewportOffset.getY());
   }
+
+	private void renderString(Graphics graphics, FontMetrics metrics, String string, int lineNumber) {
+		graphics.drawString(
+				string, 
+				getWidth() - metrics.stringWidth(string) - 3, 
+				lineNumber * metrics.getHeight() + metrics.getAscent());
+	}
 
 	private void setGraphicsConfiguration(Graphics graphics) {
 		Graphics2D g2d = (Graphics2D)graphics;
