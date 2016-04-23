@@ -71,19 +71,27 @@ public class Editor extends JPanel {
     
     graphics.translate((int)viewportOffset.getX(), (int)viewportOffset.getY());
     graphics.drawImage(backgroundImage, 0, 0, null);
-    
     bezier.render(graphics);
+    graphics.translate(-(int)viewportOffset.getX(), -(int)viewportOffset.getY());
     
-    Font font = graphics.getFont().deriveFont(Font.BOLD);
+    renderUsageHints(graphics);
+  }
+
+	private void setGraphicsConfiguration(Graphics graphics) {
+		Graphics2D g2d = (Graphics2D)graphics;
+	  g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	  g2d.setStroke(new BasicStroke(2));
+	}
+
+	private void renderUsageHints(Graphics graphics) {
+		Font font = graphics.getFont().deriveFont(Font.BOLD);
     graphics.setFont(font);
     
     FontMetrics metrics = graphics.getFontMetrics();
     renderString(graphics, metrics, "LMB - Place/Move control points", 0);
     renderString(graphics, metrics, "RMB - Remove control points", 1);
     renderString(graphics, metrics, "MMB - Pan the editor surface", 2);
-    
-    graphics.translate(-(int)viewportOffset.getX(), -(int)viewportOffset.getY());
-  }
+	}
 
 	private void renderString(Graphics graphics, FontMetrics metrics, String string, int lineNumber) {
 		graphics.drawString(
@@ -92,14 +100,8 @@ public class Editor extends JPanel {
 				lineNumber * metrics.getHeight() + metrics.getAscent());
 	}
 
-	private void setGraphicsConfiguration(Graphics graphics) {
-		Graphics2D g2d = (Graphics2D)graphics;
-    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-    g2d.setStroke(new BasicStroke(2));
-	}
-  
-  
-  private MouseAdapter mouseListener = new MouseAdapter() {
+	
+	private MouseAdapter mouseListener = new MouseAdapter() {
     @Override
     public void mousePressed(MouseEvent e) {
       Point mouse = new Point(e.getPoint().x - (int)viewportOffset.getX(), e.getPoint().y - (int)viewportOffset.getY());
