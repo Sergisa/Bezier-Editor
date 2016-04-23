@@ -140,6 +140,7 @@ public class Bezier {
   public void load(File sourceFile) {
     try {
       if (sourceFile.exists()) {
+      	clearPoints();
         BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
         while (reader.ready()) {
           String line = reader.readLine();
