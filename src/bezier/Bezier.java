@@ -27,6 +27,18 @@ public class Bezier {
   
   
   public void addPoint(Point2D point) {
+  	if (controlPoints.size() >= 2) {
+  		Rectangle2D bounds = new Rectangle2D.Double(point.getX() - POINT_SIZE, point.getY() - POINT_SIZE, POINT_SIZE*2, POINT_SIZE*2);
+  		Point2D p1 = controlPoints.get(0);
+  		for (int i = 1; i < controlPoints.size(); i++) {
+  			Point2D p2 = controlPoints.get(i);
+				if (bounds.intersectsLine(p1.getX(), p1.getY(), p2.getX(), p2.getY())) {
+					controlPoints.add(i, point);
+					return;
+				}
+				p1 = p2;
+			}
+  	}
   	controlPoints.add(point);
   }
   
