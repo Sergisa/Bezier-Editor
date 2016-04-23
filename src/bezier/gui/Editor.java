@@ -49,12 +49,16 @@ public class Editor extends JPanel {
 	}
 
 	public void setBackgroundImage(File imageFile) {
-		try {
-      backgroundImage = ImageIO.read(imageFile);
-      setPreferredSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));
-    } catch (IOException e) {
-      JOptionPane.showMessageDialog(getParent(), "Failed to load imag!", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+		if (imageFile == null) {
+			backgroundImage = null;
+		} else {
+			try {
+	      backgroundImage = ImageIO.read(imageFile);
+	      setPreferredSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));
+	    } catch (IOException e) {
+	      JOptionPane.showMessageDialog(getParent(), "Failed to load imag!", "Error", JOptionPane.ERROR_MESSAGE);
+	    }
+		}
 	}
   
   

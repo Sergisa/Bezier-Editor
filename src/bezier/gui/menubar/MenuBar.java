@@ -19,6 +19,7 @@ public class MenuBar extends JMenuBar {
 
     JMenu viewMenu = new JMenu("View");
     viewMenu.add(new OpenBackgroundImageMenuItem(editor));
+    viewMenu.add(new ClearBackgroundMenuItem(editor));
     add(viewMenu);
 	}
 }
