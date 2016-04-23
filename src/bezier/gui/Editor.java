@@ -109,6 +109,7 @@ public class Editor extends JPanel {
       if (selectedPoint == null) {
         if (e.getButton() == MouseEvent.BUTTON1) {
           if (!selectExistingPointAt(mouse)) {
+          	selectedPoint = mouse;
             bezier.addPoint(mouse);
             bezier.save(CURRENT_CURVE_BACKUP_FILE);
             repaint();
