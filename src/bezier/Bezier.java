@@ -76,11 +76,14 @@ public class Bezier {
 	}
   
   private void renderBezierCurve(Graphics g) {
-    List<Point2D> list = new ArrayList<Point2D>();
+    final int numberOfSteps = 250;
     
+    List<Point2D> list = new ArrayList<Point2D>();
     List<Point2D> result = new ArrayList<Point2D>();
-    for (double t = 0; t < 1; t += 0.004)
+		for (int k = 0; k <= numberOfSteps; k++)
     {
+    	double t = (double)k/numberOfSteps;
+    	
       list.clear();
       list.addAll(controlPoints);
       for (int i = 0; i < list.size(); i++)
@@ -89,7 +92,9 @@ public class Bezier {
         {
           Point2D p1 = list.get(j);
           Point2D p2 = list.get(j+1);
-          Point2D n = new Point2D.Double(((1-t)*p1.getX() + t*p2.getX()), ((1-t)*p1.getY() + t*p2.getY()));
+          Point2D n = new Point2D.Double(
+          		((1-t)*p1.getX() + t*p2.getX()), 
+          		((1-t)*p1.getY() + t*p2.getY()));
           list.set(j, n);
         }
       }
